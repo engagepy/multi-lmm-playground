@@ -52,7 +52,10 @@ const ChatMoreModal: React.FC<Props> = (props: Props) => {
                 role: res.choices[0].message.role,
                 content: res.choices[0].message.content as string,
             }
-            allMessages.push(message);
+            setAllMessages((prev) => [
+                ...prev,
+                message,
+            ])
         } catch (err) {
             setError('Error fetching response');
             console.error(err);
