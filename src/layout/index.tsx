@@ -1,7 +1,6 @@
-// default library
-import * as React from 'react';
 import Header from './Header';
 import SideBar from './SideBar';
+import Auth from './Auth';
 
 type Props = Readonly<{
     children: React.ReactNode;
@@ -9,13 +8,13 @@ type Props = Readonly<{
 
 const Layout = ({ children }: Props) => {
     return (
-        <div className="controller mx-auto px-4  h-screen bg-gray-100 text-gray-900 dark:bg-[#1E1E1E] dark:text-white">
+        <Auth >
             <Header />
-            <div className='flex vh-minus-100'>
+            <div className='flex vh-minus-100 overflow-y-scroll no-scrollbar'>
                 <SideBar />
                 {children}
             </div>
-        </div>
+        </Auth>
     )
 }
 

@@ -1,6 +1,6 @@
 // default library
 import * as React from 'react';
-import Checkbox from '@/commonElements/Checkbox';
+import Checkbox from '@commonElements/Checkbox';
 
 export type Props = {
     isSelectedAll: boolean;
@@ -19,7 +19,6 @@ const SelectAllSection: React.FC<Props> = (props: Props) => {
                         id: "select-all-checkbox",
                         checked: isSelectedAll,
                         className: "w-4 h-4 checkbox checkbox-primary mr-3 ",
-                        // className: "w-4 h-4 mr-3 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-600 dark:border-gray-500",
                         onChange: onHandleChange,
                     }}
                 />

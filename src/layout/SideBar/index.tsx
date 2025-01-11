@@ -1,40 +1,46 @@
 'use client';
-import * as AiModelReducer from '@/redux/reducers/AiModelReducer';
 import * as React from 'react';
+// redux
 import { useSelector, useDispatch } from 'react-redux';
+import * as AiModelReducer from '@redux/reducers/AiModelReducer';
+// all modal data
+import { allAiModel } from '@config/aiModelData';
+// custom section
 import SelectAllSection from './SelectAllSection';
-import { allAiModel } from '@/data/aiModelData';
 import ModelListSection from './ModelListSection';
 
 const Sidebar: React.FC = () => {
 
     const dispatch = useDispatch();
-    const aiModal = useSelector(AiModelReducer.getAiModels);
+    const aiModal = useSelector(AiModelReducer.getAiModels); //fetch the data form redux
 
+    // check if all ai model is selected or not
     const isAllSelected = allAiModel.length === aiModal.length;
 
-
+    // handle click event for ai model checkbox
     const onHandleClick = (id: number): void => {
         if (!isAllSelected) {
+            // check the modal is selected or not
             const isExist = aiModal.some(e => e.id === id);
 
             if (isExist) {
-                dispatch(AiModelReducer.removeAiModel(id));
+                dispatch(AiModelReducer.removeAiModel(id)); // remove the selected modal
             } else {
-                dispatch(AiModelReducer.addAiModel(id));
+                dispatch(AiModelReducer.addAiModel(id)); // add the selected modal
             }
         } else {
-            dispatch(AiModelReducer.removeAllAiModel());
-            dispatch(AiModelReducer.addAiModel(id));
+            dispatch(AiModelReducer.removeAllAiModel()); // remove all the selected modal
+            dispatch(AiModelReducer.addAiModel(id)); // add the selected modal
         }
 
     }
 
+    // handle click event for select all checkbox
     const onHandleSelectedAll = (): void => {
         if (!isAllSelected) {
-            dispatch(AiModelReducer.addAllAiModel());
+            dispatch(AiModelReducer.addAllAiModel()); // add all selected modal
         } else {
-            dispatch(AiModelReducer.removeAllAiModel());
+            dispatch(AiModelReducer.removeAllAiModel()); // remove all selected modal
         }
     }
 
@@ -46,7 +52,6 @@ const Sidebar: React.FC = () => {
                 <SelectAllSection isSelectedAll={isAllSelected} onHandleChange={onHandleSelectedAll} />
 
                 <ModelListSection aiModal={aiModal} onHandleClick={onHandleClick} />
-
             </ul>
         </div>
     )

@@ -14,7 +14,7 @@ const TypeWriterAnimation: React.FC<Props> = (props: Props) => {
             <TypeAnimation
                 sequence={[
                     text ?? '',
-                    10000, // wait 1s before replacing "Mice" with "Hamsters"
+                    1000,
                 ]}
                 wrapper="span"
                 speed={50}

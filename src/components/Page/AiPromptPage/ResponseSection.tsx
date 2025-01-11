@@ -1,10 +1,16 @@
-import * as React from 'react'
-import Image from '@/commonElements/Image'
-import { AiModel } from '@/interface/models'
-import TypeWriterAnimation from '@/components/TypeWriterAnimation'
-import * as HfHelper from '@/helper/HfHelper';
+'use client'
+import * as React from 'react';
 import type { ChatCompletionOutput } from "@huggingface/tasks";
-import Button from '@/commonElements/Button';
+// custom components
+import Image from '@commonElements/Image';
+import Button from '@commonElements/Button';
+// component for typewriter 
+import TypeWriterAnimation from '@components/TypeWriterAnimation'
+// type
+import { AiModel } from '@interface/models';
+// hugging face helper
+import * as HfHelper from '@helper/HfHelper';
+
 import ChatMoreModal from './ChatMoreModal';
 
 export type Props = {
@@ -15,8 +21,7 @@ export type Props = {
 const ResponseSection: React.FC<Props> = (props: Props) => {
     const { aiModal, prompt } = props;
 
-    const modelName = `my_model-${aiModal.id}`;
-
+    const modelName = `my_model-${aiModal.id}`; //chat model name
 
     // State to handle the response, loading state, and error state
     const [response, setResponse] = React.useState<ChatCompletionOutput | null>(null);
@@ -30,11 +35,13 @@ const ResponseSection: React.FC<Props> = (props: Props) => {
         fetchResponse();
     }, [prompt, aiModal.name]); // Re-run when prompt or aiModal changes
 
-    const fetchResponse = async () => {
+    // fetch response from hugging face
+    const fetchResponse = async (): Promise<void> => {
         try {
             setLoading(true);
             setError(null);
             setResponse(null);
+            // Send prompt to hugging face model
             const message = [
                 {
                     role: "user",
@@ -44,15 +51,15 @@ const ResponseSection: React.FC<Props> = (props: Props) => {
             const res = await HfHelper.hfAIModel(message, aiModal.model);
             setResponse(res);
         } catch (err) {
-            setError('Error fetching response');
-            console.error(err);
+            setError(JSON.parse((err as any).message));
         } finally {
             setLoading(false);
         }
     };
 
+    // Open model when user click on "What to ask More?" button
     const openModel = (): void => {
-        (document.getElementById(modelName)! as any).showModal();
+        (document.getElementById(modelName)! as any).showModal(); //open modal
         setIsOpen(true);
     }
 
@@ -86,6 +93,8 @@ const ResponseSection: React.FC<Props> = (props: Props) => {
                         {response && <TypeWriterAnimation text={response.choices[0].message.content} />}
                     </div>
                 </div>
+
+                {/* ask more button */}
                 {response && (
                     <div className='flex justify-end align-bottom mt-2'>
                         <Button
@@ -94,51 +103,26 @@ const ResponseSection: React.FC<Props> = (props: Props) => {
                                 onClick: openModel,
                             }}
                         >
-                            What to ask More?
+                            Want to ask More?
                         </Button>
                     </div>
                 )}
             </div >
 
-            {response && (
-                <dialog id={modelName} className="modal ">
-                    {isOpen && <div className="modal-box w-11/12 max-w-5xl overflow-y-scroll no-scrollbar">
-                        <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                            <div className='flex items-center gap-4'>
-                                <Image
-                                    src={aiModal.image}
-                                    alt='chatgpt'
-                                    attrBtn={{
-                                        height: 33,
-                                        width: 33
-                                    }}
-                                />
-                                <h3 >
-                                    {aiModal.name}
-                                </h3>
-                            </div>
-                            <form method="dialog">
-                                {/* if there is a button in form, it will close the modal */}
-                                <Button
-                                    attrBtn={{
-                                        className: "btn btn-sm btn-circle btn-ghost",
-                                        onClick: () => setIsOpen(true)
-                                    }}
-                                >✕</Button>
-                            </form>
-                        </div>
 
-                        <div className='mt-3'>
-                            <ChatMoreModal
-                                model={aiModal.model}
-                                messages={response!.choices}
-                                firstMessage={{
-                                    role: "user",
-                                    content: prompt
-                                }}
-                            />
-                        </div>
-                    </div>}
+            {/* chat modal */}
+            {response && (
+                <dialog id={modelName} className="modal">
+                    {isOpen &&
+                        <ChatMoreModal
+                            currentAiModel={aiModal}
+                            messages={response!.choices}
+                            firstMessage={{
+                                role: "user",
+                                content: prompt
+                            }}
+                        />
+                    }
                 </dialog>
             )}
 

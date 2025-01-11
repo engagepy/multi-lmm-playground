@@ -9,7 +9,6 @@ export type Props = {
 const index: React.FC<Props> = (props: Props) => {
     return (
         <input
-            type="text"
             {...props.attrBtn}
         />
     )

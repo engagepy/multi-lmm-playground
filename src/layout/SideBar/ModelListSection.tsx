@@ -1,4 +1,4 @@
-import { allAiModel } from '@/data/aiModelData';
+import { allAiModel } from '@/config/aiModelData';
 import { AiModelList } from '@/interface/models';
 import * as React from 'react';
 import Checkbox from '@/commonElements/Checkbox';
@@ -11,12 +11,13 @@ export type Props = {
 const ModelListSection: React.FC<Props> = (props: Props) => {
     const { aiModal, onHandleClick } = props;
 
+    // Function to handle checkbox change event
     const handleCheckboxChange = async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
         const target = e.target;
 
         const id = Number(target.value);
 
-        onHandleClick(id);
+        onHandleClick(id); // send the selected value to parent
     }
 
     return (
@@ -38,9 +39,8 @@ const ModelListSection: React.FC<Props> = (props: Props) => {
                             <Checkbox
                                 attrBtn={{
                                     id: `${ele.id}-select`,
-                                    checked: isSelected && "checked",
+                                    checked: isSelected,
                                     className: "w-4 h-4 checkbox checkbox-primary mr-3 ",
-                                    // className: "w-4 h-4 mr-3 text-blue-600 bg-gray-100 border-gray-300 rounded dark:bg-gray-600 dark:border-gray-500",
                                     onChange: handleCheckboxChange,
                                     value: ele.id,
                                 }}

@@ -1,18 +1,23 @@
 'use client'
 import * as React from 'react';
+// redux
 import { useDispatch, useSelector } from 'react-redux';
-import { getAiPrompt, updatePromptText } from '@/redux/reducers/AiPromptReducer';
-import Image from '@/commonElements/Image';
-import Input from '@/commonElements/Input';
-import Button from '@/commonElements/Button';
+import { getAiPrompt, updatePromptText } from '@redux/reducers/AiPromptReducer';
+
+// custom component
+import Image from '@commonElements/Image';
+import Input from '@commonElements/Input';
+import Button from '@commonElements/Button';
 
 const SearchSection: React.FC = () => {
 
     const dispatch = useDispatch();
-    const aiPrompt = useSelector(getAiPrompt);
+    const aiPrompt = useSelector(getAiPrompt); // fetch data from redux
 
+    // state management for the search
     const [newPrompt, setNewPrompt] = React.useState<string>(aiPrompt.prompt);
 
+    // event handler for the search input field change event
     const onHandleChangeText = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setNewPrompt(e.target.value);
     }
@@ -21,6 +26,7 @@ const SearchSection: React.FC = () => {
         <div className="relative">
             <Input
                 attrBtn={{
+                    type: "text",
                     placeholder: "Type Here...",
                     className: "w-full px-5 py-4 border border-gray-300 dark:border-gray-600 rounded-full bg-gray-50 dark:bg-[#141313] focus:outline-none focus:ring-2 focus:ring-blue-500",
                     value: newPrompt,
