@@ -113,23 +113,31 @@ Ensure you have the following installed:
 
 2.	Install dependencies:
 
-   `npm install`
+   ```bash
+   npm install
+   ```
 
 3.	Run the development server:
 
-   `npm run dev`
+   ```bash
+   npm run dev
+   ```
 
 The app will be accessible at `http://localhost:3000`.
 
 4.	Build the project for production:
 
-   `npm run build`
+   ```bash
+   npm run build
+   ```
 
 This will generate optimized files in the .next directory.
 
 5.	Start the production server:
 
-   `npm run start`
+   ```bash
+   npm run start
+   ```
 
 ### How to Add a Model in aiModelData.tsx
 
