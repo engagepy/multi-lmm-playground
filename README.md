@@ -123,7 +123,9 @@ Ensure you have the following installed:
       npm run dev
       ```
 
-The app will be accessible at `http://localhost:3000`.
+
+> The app will be accessible at `http://localhost:3000`.
+
 
 4.	Build the project for production:
 
