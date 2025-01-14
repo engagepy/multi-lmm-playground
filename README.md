@@ -105,31 +105,31 @@ Ensure you have the following installed:
 
 ### **Steps**
 1. Clone the repository:
+
    ```bash
    git clone <repository-url>
    cd multi-lmm-playground
-```
+   ```
 
 2.	Install dependencies:
 
-`npm install`
-
+   `npm install`
 
 3.	Run the development server:
 
-`npm run dev`
+   `npm run dev`
 
 The app will be accessible at `http://localhost:3000`.
 
 4.	Build the project for production:
 
-`npm run build`
+   `npm run build`
 
 This will generate optimized files in the .next directory.
 
 5.	Start the production server:
 
-`npm run start`
+   `npm run start`
 
 ### How to Add a Model in aiModelData.tsx
 
@@ -137,25 +137,25 @@ To add a new AI model:
 	1.	Open the aiModelData.tsx file in the src/config directory.
 	2.	Add an object to the models array with the following structure:
 
-```
-{
-    id: 'unique_model_id',
-    name: 'Model Name',
-    image: 'path to image',
-    model: 'Hugging Face model name',
-}
-```
+   ```
+   {
+      id: 'unique_model_id',
+      name: 'Model Name',
+      image: 'path to image',
+      model: 'Hugging Face model name',
+   }
+   ```
 
 #### Example:
 
-```
-{
-    id: 1,
-    name: 'QwenAI 2.5',
-    image: '/qwen-icon.png',
-    model: 'Qwen/Qwen2.5-72B-Instruct',
-}
-```
+   ```
+   {
+      id: 1,
+      name: 'QwenAI 2.5',
+      image: '/qwen-icon.png',
+      model: 'Qwen/Qwen2.5-72B-Instruct',
+   }
+   ```
 
 	3.	Save the file and restart the server to reflect the changes.
 
